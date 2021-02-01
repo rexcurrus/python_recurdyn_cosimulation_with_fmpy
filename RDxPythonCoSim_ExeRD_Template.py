@@ -9,7 +9,7 @@ print("\n" * 100)
 ##### Begin - User Statement
 ##### define the model name and simulation parameters
 # define the fmu file name
-fmu_filename = ''
+fmu_filename = 'Python_Cosim_GPlant.fmu'
 
 def userFunction(time, var_in, var_out, inputs, outputs, step_size):
     # in this function,
@@ -22,7 +22,22 @@ def userFunction(time, var_in, var_out, inputs, outputs, step_size):
 
     # $$$$$$$$$$$$$$$$$$$   Add your code here
 
+    y1 = outputs[0]
+    y2 = outputs[1]
+    vel = 3.0
 
+    if y1 < 28.0 and y2 < 28.0:
+        inputs[0] = vel
+        inputs[1] = vel
+    elif y1 < 28.0 and y2 > 28.0:
+        inputs[0] = 0.0
+        inputs[1] = vel
+    elif y1 > 28.0 and y2 < 28.0:
+        inputs[0] = vel
+        inputs[1] = 0.0
+    else:
+        inputs[0] = vel
+        inputs[1] = vel
 
     # $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
     # the input is given to RecurDyn and the reaction is returned from RecurDyn.
